@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { cn } from '@/lib/utils';
 
 interface SkillsProps {
   technologies: string[];
@@ -86,28 +87,42 @@ const Skills = ({ technologies }: SkillsProps) => {
             if (categorySkills.length === 0) return null;
 
             return (
-              <Card 
-                key={categoryName} 
-                className="glass-reflection border-glass-border overflow-hidden group hover:shadow-lg transition-all duration-300"
-              >
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3 text-lg font-semibold text-foreground">
-                    <span className="text-2xl">{categoryData.icon}</span>
-                    {categoryName}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {categorySkills.map((skill, index) => (
-                    <div
-                      key={skill}
-                      className={`inline-block px-3 py-2 rounded-lg text-sm font-medium ${categoryData.color} transition-all duration-200 hover:scale-105 cursor-default mr-2 mb-2`}
-                      style={{ animationDelay: `${index * 100}ms` }}
-                    >
-                      {skill}
+              <div key={categoryName} className="min-h-[20rem]">
+                <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+                  <GlowingEffect
+                    spread={40}
+                    glow={true}
+                    disabled={false}
+                    proximity={64}
+                    inactiveZone={0.01}
+                    borderWidth={3}
+                  />
+                  <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
+                    <div className="relative flex flex-1 flex-col gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-fit rounded-lg border-[0.75px] border-border bg-muted p-2">
+                          <span className="text-xl">{categoryData.icon}</span>
+                        </div>
+                        <h3 className="text-xl font-semibold font-sans tracking-[-0.04em] md:text-2xl text-foreground">
+                          {categoryName}
+                        </h3>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {categorySkills.map((skill, index) => (
+                          <Badge
+                            key={skill}
+                            variant="secondary"
+                            className="text-sm font-medium transition-all duration-200 hover:scale-105 cursor-default"
+                            style={{ animationDelay: `${index * 100}ms` }}
+                          >
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
-                  ))}
-                </CardContent>
-              </Card>
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Github, ExternalLink, Star, GitFork } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { GlowingEffect } from '@/components/ui/glowing-effect';
+import { cn } from '@/lib/utils';
 
 interface ProjectsProps {
   repos: any[];
@@ -54,86 +55,94 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {displayRepos.map((repo, index) => (
-            <Card
-              key={repo.id}
-              className="glass-reflection border-glass-border group hover:scale-[1.02] transition-all duration-300 overflow-hidden"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <CardHeader className="pb-4">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-2">
-                    <CardTitle className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-1">
-                      {repo.name}
-                    </CardTitle>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                      {repo.stargazers_count > 0 && (
-                        <div className="flex items-center gap-1">
-                          <Star size={14} />
-                          {repo.stargazers_count}
+            <div key={repo.id} className="min-h-[24rem]">
+              <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+                <GlowingEffect
+                  spread={40}
+                  glow={true}
+                  disabled={false}
+                  proximity={64}
+                  inactiveZone={0.01}
+                  borderWidth={3}
+                />
+                <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
+                  <div className="relative flex flex-1 flex-col gap-4">
+                    {/* Header */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="space-y-2 flex-1">
+                        <h3 className="text-xl font-semibold font-sans tracking-[-0.04em] md:text-2xl text-foreground line-clamp-1">
+                          {repo.name}
+                        </h3>
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                          {repo.stargazers_count > 0 && (
+                            <div className="flex items-center gap-1">
+                              <Star size={14} />
+                              {repo.stargazers_count}
+                            </div>
+                          )}
+                          {repo.forks_count > 0 && (
+                            <div className="flex items-center gap-1">
+                              <GitFork size={14} />
+                              {repo.forks_count}
+                            </div>
+                          )}
                         </div>
-                      )}
-                      {repo.forks_count > 0 && (
-                        <div className="flex items-center gap-1">
-                          <GitFork size={14} />
-                          {repo.forks_count}
-                        </div>
+                      </div>
+                      {repo.language && (
+                        <Badge variant="secondary" className="shrink-0">
+                          {repo.language}
+                        </Badge>
                       )}
                     </div>
+
+                    {/* Description */}
+                    <p className="text-sm leading-[1.375rem] md:text-base text-muted-foreground line-clamp-3">
+                      {repo.description || 'No description available for this project.'}
+                    </p>
+
+                    {/* Technologies */}
+                    {repo.topics && repo.topics.length > 0 && (
+                      <div className="flex flex-wrap gap-2">
+                        {repo.topics.slice(0, 4).map((topic: string) => (
+                          <Badge key={topic} variant="outline" className="text-xs">
+                            {topic}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Last updated */}
+                    <p className="text-xs text-muted-foreground">
+                      Last updated {formatDate(repo.updated_at)}
+                    </p>
                   </div>
-                  {repo.language && (
-                    <Badge variant="secondary" className="shrink-0">
-                      {repo.language}
-                    </Badge>
-                  )}
-                </div>
-              </CardHeader>
-              
-              <CardContent className="space-y-6">
-                <CardDescription className="text-muted-foreground leading-relaxed line-clamp-3">
-                  {repo.description || 'No description available for this project.'}
-                </CardDescription>
 
-                {/* Technologies */}
-                {repo.topics && repo.topics.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {repo.topics.slice(0, 4).map((topic: string) => (
-                      <Badge key={topic} variant="outline" className="text-xs">
-                        {topic}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-
-                {/* Last updated */}
-                <p className="text-xs text-muted-foreground">
-                  Last updated {formatDate(repo.updated_at)}
-                </p>
-
-                {/* Action buttons */}
-                <div className="flex gap-3 pt-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                    onClick={() => window.open(repo.html_url, '_blank')}
-                  >
-                    <Github className="mr-2 h-4 w-4" />
-                    Code
-                  </Button>
-                  {repo.homepage && (
+                  {/* Action buttons */}
+                  <div className="flex gap-3 pt-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-                      onClick={() => window.open(repo.homepage, '_blank')}
+                      className="flex-1 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                      onClick={() => window.open(repo.html_url, '_blank')}
                     >
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Demo
+                      <Github className="mr-2 h-4 w-4" />
+                      Code
                     </Button>
-                  )}
+                    {repo.homepage && (
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+                        onClick={() => window.open(repo.homepage, '_blank')}
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Demo
+                      </Button>
+                    )}
+                  </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           ))}
         </div>
 
