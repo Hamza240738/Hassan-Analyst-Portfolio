@@ -277,7 +277,7 @@ const Contact = ({ user }: ContactProps) => {
             </Button>
             <Button
               variant="outline"
-              onClick={() => window.open('mailto:contact@example.com', '_blank')}
+              onClick={() => window.open('mailto:muhammadhassan.analytics@gmail.com', '_blank')}
               className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 hover:scale-105 transition-all duration-300 hover:text-primary"
             >
               <Mail className="mr-2 h-4 w-4" />
