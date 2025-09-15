@@ -1,6 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { cn } from '@/lib/utils';
+import { BarChart3, LineChart, Microscope, Briefcase, Zap } from 'lucide-react';
 
 interface SkillsProps {
   technologies: string[];
@@ -12,27 +13,27 @@ const Skills = ({ technologies }: SkillsProps) => {
     'Data Analysis': {
       color: 'bg-primary/5 text-foreground border-primary/20 hover:bg-primary/10 hover:border-primary/30',
       skills: ['Python', 'R', 'SQL', 'Excel', 'Data Analysis', 'Statistical Analysis', 'Research Analysis'],
-      icon: '📊'
+      icon: BarChart3
     },
     'Visualization': {
       color: 'bg-muted/30 text-foreground border-muted hover:bg-muted/50 hover:border-foreground/20',
       skills: ['Power BI', 'Tableau', 'Data Visualization', 'Dashboard Development', 'Business Intelligence'],
-      icon: '📈'
+      icon: LineChart
     },
     'Data Science': {
       color: 'bg-secondary/50 text-foreground border-secondary hover:bg-secondary/70 hover:border-foreground/30',
       skills: ['Machine Learning', 'Data Science', 'Pandas', 'NumPy', 'Statistics', 'Bioinformatics'],
-      icon: '🔬'
+      icon: Microscope
     },
     'Business': {
       color: 'bg-accent/5 text-foreground border-accent/20 hover:bg-accent/10 hover:border-accent/30',
       skills: ['Business Analytics', 'Market Research', 'KPI Analysis', 'Strategic Planning'],
-      icon: '💼'
+      icon: Briefcase
     },
     'Technical': {
       color: 'bg-glass border-glass-border text-foreground hover:bg-primary/5 hover:border-primary/20',
       skills: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'Git', 'Docker', 'AWS'],
-      icon: '⚡'
+      icon: Zap
     },
   };
 
@@ -101,7 +102,7 @@ const Skills = ({ technologies }: SkillsProps) => {
                     <div className="relative flex flex-1 flex-col gap-4">
                       <div className="flex items-center gap-3">
                         <div className="w-fit rounded-lg border-[0.75px] border-border bg-muted p-2">
-                          <span className="text-xl">{categoryData.icon}</span>
+                          <categoryData.icon className="h-5 w-5 text-foreground" />
                         </div>
                         <h3 className="text-xl font-semibold font-sans tracking-[-0.04em] md:text-2xl text-foreground">
                           {categoryName}
