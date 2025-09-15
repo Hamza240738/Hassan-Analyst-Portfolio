@@ -69,7 +69,7 @@ const Skills = ({ technologies }: SkillsProps) => {
     <section id="skills" className="py-24 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-20 opacity-0 animate-fade-in">
+        <div className="text-center mb-20">
           <h2 className="text-section text-foreground mb-6">
             Expertise & Skills
           </h2>
@@ -80,7 +80,7 @@ const Skills = ({ technologies }: SkillsProps) => {
 
         {/* Core Skills Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {Object.entries(skillCategories).map(([categoryName, categoryData], index) => {
+          {Object.entries(skillCategories).map(([categoryName, categoryData]) => {
             const categorySkills = technologies.filter(tech =>
               categoryData.skills.some(s => s.toLowerCase() === tech.toLowerCase())
             );
@@ -88,17 +88,8 @@ const Skills = ({ technologies }: SkillsProps) => {
             if (categorySkills.length === 0) return null;
 
             return (
-              <div 
-                key={categoryName} 
-                className={cn(
-                  "min-h-[20rem] opacity-0 hover:scale-[1.02] transition-all duration-500",
-                  index % 3 === 0 && "animate-slide-in-left",
-                  index % 3 === 1 && "animate-fade-in",
-                  index % 3 === 2 && "animate-slide-in-right"
-                )}
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3 group">
+              <div key={categoryName} className="min-h-[20rem]">
+                <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
                   <GlowingEffect
                     spread={40}
                     glow={true}
@@ -107,7 +98,7 @@ const Skills = ({ technologies }: SkillsProps) => {
                     inactiveZone={0.01}
                     borderWidth={3}
                   />
-                  <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] group-hover:shadow-lg transition-shadow duration-500">
+                  <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
                     <div className="relative flex flex-1 flex-col gap-4">
                       <div className="flex items-center gap-3">
                         <div className="w-fit rounded-lg border-[0.75px] border-border p-2">
@@ -118,15 +109,12 @@ const Skills = ({ technologies }: SkillsProps) => {
                         </h3>
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {categorySkills.map((skill, skillIndex) => (
+                        {categorySkills.map((skill, index) => (
                           <Badge
                             key={skill}
                             variant="secondary"
-                            className="text-sm font-medium transition-all duration-200 hover:scale-105 cursor-default hover:bg-primary hover:text-primary-foreground"
-                            style={{ 
-                              animationDelay: `${(index * 0.3) + (skillIndex * 0.1)}s`,
-                              animation: 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both'
-                            }}
+                            className="text-sm font-medium transition-all duration-200 hover:scale-105 cursor-default"
+                            style={{ animationDelay: `${index * 100}ms` }}
                           >
                             {skill}
                           </Badge>
@@ -141,10 +129,10 @@ const Skills = ({ technologies }: SkillsProps) => {
         </div>
 
         {/* Skills Overview */}
-        <div className="text-center opacity-0 animate-scale-in" style={{ animationDelay: '1.5s' }}>
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-muted/30 rounded-full hover:bg-muted/50 transition-colors duration-300 group">
-            <span className="w-2 h-2 bg-primary rounded-full animate-bounce-gentle group-hover:bg-accent transition-colors duration-300"></span>
-            <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+        <div className="text-center">
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-muted/30 rounded-full">
+            <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+            <span className="text-sm font-medium text-muted-foreground">
               {technologies.length} specialized skills across data science and analytics
             </span>
           </div>
