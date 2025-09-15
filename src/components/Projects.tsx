@@ -44,7 +44,7 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
     <section id="projects" className="py-20 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 opacity-0 animate-fade-in">
           <h2 className="text-section text-foreground mb-4">
             Featured Projects
           </h2>
@@ -55,8 +55,15 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {displayRepos.map((repo, index) => (
-            <div key={repo.id} className="min-h-[24rem]">
-              <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+            <div 
+              key={repo.id} 
+              className={cn(
+                "min-h-[24rem] opacity-0",
+                index % 2 === 0 ? "animate-slide-in-left" : "animate-slide-in-right"
+              )}
+              style={{ animationDelay: `${index * 0.2}s` }}
+            >
+              <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3 group hover:scale-[1.02] transition-all duration-500">
                 <GlowingEffect
                   spread={40}
                   glow={true}
@@ -65,7 +72,7 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
                   inactiveZone={0.01}
                   borderWidth={3}
                 />
-                <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
+                <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)] group-hover:shadow-lg transition-shadow duration-500">
                   <div className="relative flex flex-1 flex-col gap-4">
                     {/* Header */}
                     <div className="flex items-start justify-between gap-4">
@@ -122,7 +129,7 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                      className="flex-1 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg transform"
                       onClick={() => window.open(repo.html_url, '_blank')}
                     >
                       <Github className="mr-2 h-4 w-4" />
@@ -132,7 +139,7 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex-1 bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+                        className="flex-1 bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg transform"
                         onClick={() => window.open(repo.homepage, '_blank')}
                       >
                         <ExternalLink className="mr-2 h-4 w-4" />
@@ -147,12 +154,12 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
         </div>
 
         {repos.length > featuredRepos.length && (
-          <div className="text-center mt-12">
+          <div className="text-center mt-12 opacity-0 animate-scale-in" style={{ animationDelay: '1s' }}>
             <Button
               variant="outline"
               size="lg"
               onClick={() => setShowAll(!showAll)}
-              className="bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+              className="bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 hover:shadow-lg transform"
             >
               {showAll ? `Show Featured Only` : `View All ${repos.length} Projects`}
             </Button>

@@ -70,7 +70,7 @@ const Contact = ({ user }: ContactProps) => {
     <section id="contact" className="py-20 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 opacity-0 animate-fade-in">
           <h2 className="text-section text-foreground mb-4">
             Let's Work Together
           </h2>
@@ -82,9 +82,9 @@ const Contact = ({ user }: ContactProps) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Info Cards */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-6 opacity-0 animate-slide-in-left" style={{ animationDelay: '0.2s' }}>
             {/* Profile Card */}
-            <Card className="glass-reflection border-glass-border overflow-hidden">
+            <Card className="glass-reflection border-glass-border overflow-hidden group hover:scale-105 transition-all duration-500 hover:shadow-lg animate-glow-pulse">
               <CardContent className="p-6 text-center">
                 <div className="relative mb-4 inline-block">
                   <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border border-glass-border bg-background/50 backdrop-blur-sm">
@@ -107,7 +107,7 @@ const Contact = ({ user }: ContactProps) => {
 
             {/* Contact Details */}
             <div className="space-y-4">
-              <Card className="glass-reflection border-glass-border">
+              <Card className="glass-reflection border-glass-border group hover:scale-105 transition-all duration-300">
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center">
@@ -130,7 +130,7 @@ const Contact = ({ user }: ContactProps) => {
               </Card>
 
               {user?.location && (
-                <Card className="glass-reflection border-glass-border">
+                <Card className="glass-reflection border-glass-border group hover:scale-105 transition-all duration-300">
                   <CardContent className="p-4">
                     <div className="flex items-center space-x-3">
                       <div className="w-10 h-10 rounded-lg flex items-center justify-center">
@@ -145,7 +145,7 @@ const Contact = ({ user }: ContactProps) => {
                 </Card>
               )}
 
-              <Card className="glass-reflection border-glass-border">
+              <Card className="glass-reflection border-glass-border group hover:scale-105 transition-all duration-300">
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 rounded-lg flex items-center justify-center">
@@ -162,8 +162,8 @@ const Contact = ({ user }: ContactProps) => {
           </div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <Card className="glass-reflection border-glass-border">
+          <div className="lg:col-span-2 opacity-0 animate-slide-in-right" style={{ animationDelay: '0.4s' }}>
+            <Card className="glass-reflection border-glass-border hover:shadow-lg transition-shadow duration-500">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2 text-foreground">
                   <MessageSquare className="h-5 w-5" />
@@ -241,7 +241,7 @@ const Contact = ({ user }: ContactProps) => {
                     type="submit"
                     size="lg"
                     disabled={isSubmitting}
-                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-300 hover:scale-[1.02]"
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-300 hover:scale-[1.02] hover:shadow-lg transform"
                   >
                     {isSubmitting ? (
                       <>
@@ -262,7 +262,7 @@ const Contact = ({ user }: ContactProps) => {
         </div>
 
         {/* Additional Contact Options */}
-        <div className="mt-16 text-center">
+        <div className="mt-16 text-center opacity-0 animate-scale-in" style={{ animationDelay: '0.8s' }}>
           <p className="text-muted-foreground mb-6">
             Prefer a different way to connect?
           </p>
@@ -270,7 +270,7 @@ const Contact = ({ user }: ContactProps) => {
             <Button
               variant="outline"
               onClick={() => window.open('https://github.com/HassanAli135', '_blank')}
-              className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 hover:scale-105 transition-all duration-300 hover:text-primary"
+              className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 hover:scale-105 transition-all duration-300 hover:text-primary hover:shadow-lg transform"
             >
               <Github className="mr-2 h-4 w-4" />
               GitHub
@@ -278,7 +278,7 @@ const Contact = ({ user }: ContactProps) => {
             <Button
               variant="outline"
               onClick={() => window.open('mailto:muhammadhassan.analytics@gmail.com', '_blank')}
-              className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 hover:scale-105 transition-all duration-300 hover:text-primary"
+              className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 hover:scale-105 transition-all duration-300 hover:text-primary hover:shadow-lg transform"
             >
               <Mail className="mr-2 h-4 w-4" />
               Direct Email
