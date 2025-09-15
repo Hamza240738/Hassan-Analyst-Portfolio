@@ -113,20 +113,20 @@ const Navigation = () => {
       {/* Social Links - Floating on left */}
       <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-40 hidden xl:block">
         <div className="flex flex-col space-y-4">
-            <Button
-              variant="outline"
-              size="icon"
-              className="glass-reflection hover:scale-110 transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:shadow-lg transform"
-              onClick={() => window.open('https://github.com/HassanAli135', '_blank')}
-            >
+          <Button
+            variant="outline"
+            size="icon"
+            className="glass-reflection hover:scale-110 transition-all duration-300"
+            onClick={() => window.open('https://github.com/HassanAli135', '_blank')}
+          >
             <Github size={18} />
           </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="glass-reflection hover:scale-110 transition-all duration-300 hover:bg-primary hover:text-primary-foreground hover:shadow-lg transform"
-              onClick={() => scrollToSection('#contact')}
-            >
+          <Button
+            variant="outline"
+            size="icon"
+            className="glass-reflection hover:scale-110 transition-all duration-300"
+            onClick={() => scrollToSection('#contact')}
+          >
             <Mail size={18} />
           </Button>
         </div>

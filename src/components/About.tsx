@@ -32,7 +32,7 @@ const About = ({ user }: AboutProps) => {
     <section id="about" className="py-20 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16 opacity-0 animate-fade-in">
+        <div className="text-center mb-16">
           <h2 className="text-section text-foreground mb-4">
             About Me
           </h2>
@@ -43,9 +43,9 @@ const About = ({ user }: AboutProps) => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column - Image */}
-          <div className="lg:col-span-5 opacity-0 animate-slide-in-left">
+          <div className="lg:col-span-5">
             <div className="relative group">
-              <div className="relative overflow-hidden rounded-2xl animate-glow-pulse">
+              <div className="relative overflow-hidden rounded-2xl">
                 <img
                   src={user.avatar_url}
                   alt={user.name}
@@ -53,12 +53,12 @@ const About = ({ user }: AboutProps) => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 opacity-60" />
               </div>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 -z-10 animate-float" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             </div>
           </div>
 
           {/* Right Column - Content */}
-          <div className="lg:col-span-7 space-y-8 opacity-0 animate-slide-in-right">
+          <div className="lg:col-span-7 space-y-8">
             <div className="space-y-6">
               <div>
                 <h3 className="text-title font-semibold text-foreground mb-2">
@@ -86,26 +86,26 @@ const About = ({ user }: AboutProps) => {
 
             {/* Stats Grid */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-glass-border pt-8">
-              <div className="text-center group hover:scale-105 transition-transform duration-300 opacity-0 animate-stagger-1">
-                <div className="text-2xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">{user.public_repos}</div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-foreground mb-1">{user.public_repos}</div>
                 <div className="text-sm text-muted-foreground">Projects</div>
               </div>
-              <div className="text-center group hover:scale-105 transition-transform duration-300 opacity-0 animate-stagger-2">
-                <div className="text-2xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">{user.followers}</div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-foreground mb-1">{user.followers}</div>
                 <div className="text-sm text-muted-foreground">Followers</div>
               </div>
-              <div className="text-center group hover:scale-105 transition-transform duration-300 opacity-0 animate-stagger-3">
-                <div className="text-2xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">{yearsActive}+</div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-foreground mb-1">{yearsActive}+</div>
                 <div className="text-sm text-muted-foreground">Years Exp</div>
               </div>
               {user.company ? (
-                <div className="text-center group hover:scale-105 transition-transform duration-300 opacity-0 animate-stagger-4">
-                  <div className="text-lg font-semibold text-foreground mb-1 truncate group-hover:text-primary transition-colors duration-300">{user.company}</div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold text-foreground mb-1 truncate">{user.company}</div>
                   <div className="text-sm text-muted-foreground">Company</div>
                 </div>
               ) : (
-                <div className="text-center group hover:scale-105 transition-transform duration-300 opacity-0 animate-stagger-4">
-                  <div className="text-2xl font-bold text-foreground mb-1 group-hover:text-primary transition-colors duration-300">∞</div>
+                <div className="text-center">
+                  <div className="text-2xl font-bold text-foreground mb-1">∞</div>
                   <div className="text-sm text-muted-foreground">Passion</div>
                 </div>
               )}
