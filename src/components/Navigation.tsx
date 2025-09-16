@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, Github, Mail, Home, User, FolderOpen, Code, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion, AnimatePresence } from 'framer-motion';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -48,143 +47,90 @@ const Navigation = () => {
   return (
     <>
       {/* Desktop Navigation - Modern floating navbar */}
-      <motion.nav 
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 hidden lg:block transition-all duration-300 rounded-xl ${
-          isScrolled ? 'glass-reflection shadow-lg' : 'glass'
-        }`}
-      >
+      <nav className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 hidden lg:block transition-all duration-300 rounded-xl ${
+        isScrolled ? 'glass-reflection shadow-lg' : 'glass'
+      }`}>
         <div className="flex items-center space-x-1 px-6 py-3">
-          {navItems.map((item, index) => (
-            <motion.button
+          {navItems.map((item) => (
+            <button
               key={item.id}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.4 + index * 0.1 }}
               onClick={() => scrollToSection(item.href)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-xl transition-all duration-300 text-sm font-medium ${
                 activeSection === item.id
                   ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
               }`}
-              whileHover={{ scale: 1.05, y: -1 }}
-              whileTap={{ scale: 0.95 }}
             >
               <item.icon size={16} />
               <span>{item.label}</span>
-            </motion.button>
+            </button>
           ))}
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Navigation - Modern hamburger */}
       <nav className="fixed top-6 right-6 z-50 lg:hidden">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3, delay: 0.2 }}
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => setIsOpen(!isOpen)}
+          className={`glass-reflection transition-all duration-300 ${
+            isScrolled ? 'shadow-lg' : ''
+          }`}
         >
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setIsOpen(!isOpen)}
-            className={`glass-reflection transition-all duration-300 ${
-              isScrolled ? 'shadow-lg' : ''
-            }`}
-          >
-            <motion.div
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
-            </motion.div>
-          </Button>
-        </motion.div>
+          {isOpen ? <X size={20} /> : <Menu size={20} />}
+        </Button>
 
         {/* Mobile Menu Overlay */}
-        <AnimatePresence>
-          {isOpen && (
-            <>
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="fixed inset-0 bg-background/80 backdrop-blur-sm -z-10"
-                onClick={() => setIsOpen(false)}
-              />
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.9, y: -10 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-16 right-0 glass-reflection border border-glass-border rounded-xl p-6 min-w-[240px] shadow-xl"
-              >
-                <div className="space-y-2">
-                  {navItems.map((item, index) => (
-                    <motion.button
-                      key={item.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.2, delay: index * 0.05 }}
-                      onClick={() => scrollToSection(item.href)}
-                      className={`flex items-center space-x-3 w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
-                        activeSection === item.id
-                          ? 'bg-primary text-primary-foreground'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                      }`}
-                      whileHover={{ x: 5 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <item.icon size={18} />
-                      <span className="font-medium">{item.label}</span>
-                    </motion.button>
-                  ))}
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+        {isOpen && (
+          <>
+            <div 
+              className="fixed inset-0 bg-background/80 backdrop-blur-sm -z-10"
+              onClick={() => setIsOpen(false)}
+            />
+            <div className="absolute top-16 right-0 glass-reflection border border-glass-border rounded-xl p-6 min-w-[240px] shadow-xl">
+              <div className="space-y-2">
+                {navItems.map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.href)}
+                    className={`flex items-center space-x-3 w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
+                      activeSection === item.id
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                    }`}
+                  >
+                    <item.icon size={18} />
+                    <span className="font-medium">{item.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </>
+        )}
       </nav>
 
       {/* Social Links - Floating on left */}
-      <motion.div 
-        initial={{ x: -50, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.8 }}
-        className="fixed left-6 top-1/2 transform -translate-y-1/2 z-40 hidden xl:block"
-      >
+      <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-40 hidden xl:block">
         <div className="flex flex-col space-y-4">
-          <motion.div
-            whileHover={{ scale: 1.1, x: 5 }}
-            whileTap={{ scale: 0.9 }}
+          <Button
+            variant="outline"
+            size="icon"
+            className="glass-reflection hover:scale-110 transition-all duration-300"
+            onClick={() => window.open('https://github.com/HassanAli135', '_blank')}
           >
-            <Button
-              variant="outline"
-              size="icon"
-              className="glass-reflection transition-all duration-300"
-              onClick={() => window.open('https://github.com/HassanAli135', '_blank')}
-            >
-              <Github size={18} />
-            </Button>
-          </motion.div>
-          <motion.div
-            whileHover={{ scale: 1.1, x: 5 }}
-            whileTap={{ scale: 0.9 }}
+            <Github size={18} />
+          </Button>
+          <Button
+            variant="outline"
+            size="icon"
+            className="glass-reflection hover:scale-110 transition-all duration-300"
+            onClick={() => scrollToSection('#contact')}
           >
-            <Button
-              variant="outline"
-              size="icon"
-              className="glass-reflection transition-all duration-300"
-              onClick={() => scrollToSection('#contact')}
-            >
-              <Mail size={18} />
-            </Button>
-          </motion.div>
+            <Mail size={18} />
+          </Button>
         </div>
-      </motion.div>
+      </div>
     </>
   );
 };

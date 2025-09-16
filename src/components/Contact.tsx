@@ -5,7 +5,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { motion } from 'framer-motion';
 
 interface ContactProps {
   user: any;
@@ -71,43 +70,19 @@ const Contact = ({ user }: ContactProps) => {
     <section id="contact" className="py-20 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-section text-foreground mb-4"
-          >
+        <div className="text-center mb-16">
+          <h2 className="text-section text-foreground mb-4">
             Let's Work Together
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="text-lg text-muted-foreground max-w-2xl mx-auto"
-          >
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Have a project in mind or just want to chat? I'd love to hear from you. 
             Let's create something amazing together.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Contact Info Cards */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="lg:col-span-1 space-y-6"
-          >
+          <div className="lg:col-span-1 space-y-6">
             {/* Profile Card */}
             <Card className="glass-reflection border-glass-border overflow-hidden">
               <CardContent className="p-6 text-center">
@@ -184,16 +159,10 @@ const Contact = ({ user }: ContactProps) => {
                 </CardContent>
               </Card>
             </div>
-          </motion.div>
+          </div>
 
           {/* Contact Form */}
-          <motion.div 
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            viewport={{ once: true }}
-            className="lg:col-span-2"
-          >
+          <div className="lg:col-span-2">
             <Card className="glass-reflection border-glass-border">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2 text-foreground">
@@ -268,81 +237,54 @@ const Contact = ({ user }: ContactProps) => {
                     />
                   </div>
 
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                  <Button
+                    type="submit"
+                    size="lg"
+                    disabled={isSubmitting}
+                    className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-300 hover:scale-[1.02]"
                   >
-                    <Button
-                      type="submit"
-                      size="lg"
-                      disabled={isSubmitting}
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-300"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
-                          Sending Message...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="mr-2 h-4 w-4" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </motion.div>
+                    {isSubmitting ? (
+                      <>
+                        <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground border-t-transparent" />
+                        Sending Message...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" />
+                        Send Message
+                      </>
+                    )}
+                  </Button>
                 </form>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
         </div>
 
         {/* Additional Contact Options */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          viewport={{ once: true }}
-          className="mt-16 text-center"
-        >
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            viewport={{ once: true }}
-            className="text-muted-foreground mb-6"
-          >
+        <div className="mt-16 text-center">
+          <p className="text-muted-foreground mb-6">
             Prefer a different way to connect?
-          </motion.p>
+          </p>
           <div className="flex justify-center space-x-4">
-            <motion.div
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+            <Button
+              variant="outline"
+              onClick={() => window.open('https://github.com/HassanAli135', '_blank')}
+              className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 hover:scale-105 transition-all duration-300 hover:text-primary"
             >
-              <Button
-                variant="outline"
-                onClick={() => window.open('https://github.com/HassanAli135', '_blank')}
-                className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 transition-all duration-300 hover:text-primary"
-              >
-                <Github className="mr-2 h-4 w-4" />
-                GitHub
-              </Button>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              <Github className="mr-2 h-4 w-4" />
+              GitHub
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => window.open('mailto:muhammadhassan.analytics@gmail.com', '_blank')}
+              className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 hover:scale-105 transition-all duration-300 hover:text-primary"
             >
-              <Button
-                variant="outline"
-                onClick={() => window.open('mailto:muhammadhassan.analytics@gmail.com', '_blank')}
-                className="glass-reflection border-glass-border hover:bg-primary/10 hover:border-primary/20 transition-all duration-300 hover:text-primary"
-              >
-                <Mail className="mr-2 h-4 w-4" />
-                Direct Email
-              </Button>
-            </motion.div>
+              <Mail className="mr-2 h-4 w-4" />
+              Direct Email
+            </Button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );
