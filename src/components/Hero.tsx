@@ -65,24 +65,20 @@ const Hero = ({ user }: HeroProps) => {
               </p>
             </motion.div>
 
-            <h1 className="text-hero font-bold leading-tight mb-6">
-              {(user.name || user.login).split("").map((letter: string, index: number) => (
-                <motion.span
-                  key={index}
-                  initial={{ y: 100, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{
-                    delay: 0.5 + index * 0.05,
-                    type: "spring",
-                    stiffness: 150,
-                    damping: 25,
-                  }}
-                  className="inline-block text-transparent bg-clip-text 
-                  bg-gradient-to-r from-foreground to-foreground/80"
-                >
-                  {letter === " " ? "\u00A0" : letter}
-                </motion.span>
-              ))}
+            <h1 className="text-hero font-bold leading-tight mb-6 whitespace-nowrap overflow-hidden">
+              <motion.span
+                initial={{ x: -100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{
+                  delay: 0.5,
+                  type: "spring",
+                  stiffness: 150,
+                  damping: 25,
+                }}
+                className="block text-transparent bg-clip-text bg-gradient-to-r from-foreground to-foreground/80"
+              >
+                {user.name || user.login}
+              </motion.span>
             </h1>
             
             <motion.p 
@@ -99,26 +95,38 @@ const Hero = ({ user }: HeroProps) => {
           <motion.div 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 1.6, duration: 0.8 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
             className="flex flex-wrap justify-center gap-4 mb-16"
           >
-            <Button
-              size="lg"
-              className="font-semibold bg-primary hover:bg-primary/80 hover:shadow-lg hover:scale-105 text-primary-foreground transition-all duration-200"
-              onClick={() => window.open(user.html_url, '_blank')}
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <Github className="mr-2 h-5 w-5" />
-              View My Work
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="font-medium glass-reflection border-glass-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              <Button
+                size="lg"
+                className="font-semibold bg-primary hover:bg-primary/80 hover:shadow-lg text-primary-foreground transition-all duration-200"
+                onClick={() => window.open(user.html_url, '_blank')}
+              >
+                <Github className="mr-2 h-5 w-5" />
+                View My Work
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <ExternalLink className="mr-2 h-5 w-5" />
-              Get In Touch
-            </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="font-medium glass-reflection border-glass-border hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <ExternalLink className="mr-2 h-5 w-5" />
+                Get In Touch
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
