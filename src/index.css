@@ -149,12 +149,12 @@ All colors MUST be HSL.
 
   /* Text selection styling */
   ::selection {
-    background-color: hsl(var(--foreground));
-    color: hsl(var(--background));
+    background-color: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
   }
 
   ::-moz-selection {
-    background-color: hsl(var(--foreground));
-    color: hsl(var(--background));
+    background-color: hsl(0 0% 100%);
+    color: hsl(0 0% 0%);
   }
 }
