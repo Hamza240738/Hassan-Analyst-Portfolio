@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
 
 interface ProjectsProps {
   repos: any[];
@@ -41,63 +40,23 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
     );
   }
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50, scale: 0.9 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }
-    }
-  };
-
   return (
-    <motion.section 
-      id="projects" 
-      className="py-20 px-6 lg:px-8"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      variants={containerVariants}
-    >
+    <section id="projects" className="py-20 px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <motion.div className="text-center mb-16" variants={cardVariants}>
+        <div className="text-center mb-16">
           <h2 className="text-section text-foreground mb-4">
             Featured Projects
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             A showcase of my best work, featuring innovative solutions and modern development practices.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {displayRepos.map((repo, index) => (
-            <motion.div 
-              key={repo.id} 
-              className="min-h-[24rem]"
-              variants={cardVariants}
-              whileHover={{ 
-                y: -10,
-                transition: { type: "spring", stiffness: 300, damping: 20 }
-              }}
-            >
-              <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3 transition-all duration-300 hover:border-primary/30">
+            <div key={repo.id} className="min-h-[24rem]">
+              <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
                 <GlowingEffect
                   spread={40}
                   glow={true}
@@ -106,11 +65,7 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
                   inactiveZone={0.01}
                   borderWidth={3}
                 />
-                <motion.div 
-                  className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]"
-                  whileHover={{ backgroundColor: "hsl(var(--glass))" }}
-                  transition={{ duration: 0.3 }}
-                >
+                <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
                   <div className="relative flex flex-1 flex-col gap-4">
                     {/* Header */}
                     <div className="flex items-start justify-between gap-4">
@@ -163,58 +118,36 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
                   </div>
 
                   {/* Action buttons */}
-                  <motion.div 
-                    className="flex gap-3 pt-2"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.5 }}
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="flex-1"
+                  <div className="flex gap-3 pt-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                      onClick={() => window.open(repo.html_url, '_blank')}
                     >
+                      <Github className="mr-2 h-4 w-4" />
+                      Code
+                    </Button>
+                    {repo.homepage && (
                       <Button
                         variant="outline"
                         size="sm"
-                        className="w-full bg-background/50 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                        onClick={() => window.open(repo.html_url, '_blank')}
+                        className="flex-1 bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+                        onClick={() => window.open(repo.homepage, '_blank')}
                       >
-                        <Github className="mr-2 h-4 w-4" />
-                        Code
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Demo
                       </Button>
-                    </motion.div>
-                    {repo.homepage && (
-                      <motion.div
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="flex-1"
-                      >
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="w-full bg-background/50 hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-                          onClick={() => window.open(repo.homepage, '_blank')}
-                        >
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Demo
-                        </Button>
-                      </motion.div>
                     )}
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {repos.length > featuredRepos.length && (
-          <motion.div 
-            className="text-center mt-12"
-            variants={cardVariants}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <div className="text-center mt-12">
             <Button
               variant="outline"
               size="lg"
@@ -223,10 +156,10 @@ const Projects = ({ repos, featuredRepos }: ProjectsProps) => {
             >
               {showAll ? `Show Featured Only` : `View All ${repos.length} Projects`}
             </Button>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
