@@ -146,4 +146,15 @@ All colors MUST be HSL.
     transform: translateY(-2px);
     background: hsl(var(--glass));
   }
+
+  /* Text selection styling */
+  ::selection {
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
+  }
+
+  ::-moz-selection {
+    background-color: hsl(var(--foreground));
+    color: hsl(var(--background));
+  }
 }
