@@ -1,5 +1,6 @@
 import { MapPin } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { motion } from 'framer-motion';
 
 interface AboutProps {
   user: any;
@@ -28,38 +29,96 @@ const About = ({ user }: AboutProps) => {
   const joinDate = new Date(user.created_at).getFullYear();
   const yearsActive = new Date().getFullYear() - joinDate;
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12
+      }
+    }
+  };
+
+  const statsVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 120,
+        damping: 10,
+        delay: 0.5
+      }
+    }
+  };
+
   return (
-    <section id="about" className="py-20 px-6 lg:px-8">
+    <motion.section 
+      id="about" 
+      className="py-20 px-6 lg:px-8"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-16">
+        <motion.div className="text-center mb-16" variants={itemVariants}>
           <h2 className="text-section text-foreground mb-4">
             About Me
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Get to know the person behind the code
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column - Image */}
-          <div className="lg:col-span-5">
-            <div className="relative group">
+          <motion.div className="lg:col-span-5" variants={itemVariants}>
+            <motion.div 
+              className="relative group"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
               <div className="relative overflow-hidden rounded-2xl">
-                <img
+                <motion.img
                   src={user.avatar_url}
                   alt={user.name}
-                  className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full aspect-square object-cover"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.7, ease: "easeOut" }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-accent/20 opacity-60" />
               </div>
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-75 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
-            </div>
-          </div>
+              <motion.div 
+                className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl opacity-75 -z-10"
+                whileHover={{ opacity: 1, scale: 1.05 }}
+                transition={{ duration: 0.5 }}
+              />
+            </motion.div>
+          </motion.div>
 
           {/* Right Column - Content */}
-          <div className="lg:col-span-7 space-y-8">
-            <div className="space-y-6">
+          <motion.div className="lg:col-span-7 space-y-8" variants={itemVariants}>
+            <motion.div 
+              className="space-y-6"
+              variants={itemVariants}
+            >
               <div>
                 <h3 className="text-title font-semibold text-foreground mb-2">
                   {user.name || user.login}
@@ -82,46 +141,55 @@ const About = ({ user }: AboutProps) => {
                   or sharing knowledge with the developer community.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-glass-border pt-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground mb-1">{user.public_repos}</div>
-                <div className="text-sm text-muted-foreground">Projects</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground mb-1">{user.followers}</div>
-                <div className="text-sm text-muted-foreground">Followers</div>
-              </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-foreground mb-1">{yearsActive}+</div>
-                <div className="text-sm text-muted-foreground">Years Exp</div>
-              </div>
-              {user.company ? (
-                <div className="text-center">
-                  <div className="text-lg font-semibold text-foreground mb-1 truncate">{user.company}</div>
-                  <div className="text-sm text-muted-foreground">Company</div>
-                </div>
-              ) : (
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-foreground mb-1">∞</div>
-                  <div className="text-sm text-muted-foreground">Passion</div>
-                </div>
-              )}
-            </div>
+            <motion.div 
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-glass-border pt-8"
+              variants={statsVariants}
+            >
+              {[
+                { value: user.public_repos, label: 'Projects' },
+                { value: user.followers, label: 'Followers' },
+                { value: `${yearsActive}+`, label: 'Years Exp' },
+                { value: user.company || '∞', label: user.company ? 'Company' : 'Passion' }
+              ].map((stat, index) => (
+                <motion.div 
+                  key={index}
+                  className="text-center"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                >
+                  <motion.div 
+                    className="text-2xl font-bold text-foreground mb-1"
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    transition={{ delay: index * 0.1, type: "spring", stiffness: 200 }}
+                    viewport={{ once: true }}
+                  >
+                    {stat.value}
+                  </motion.div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                </motion.div>
+              ))}
+            </motion.div>
 
             {/* Additional Info */}
             {user.location && (
-              <div className="flex items-center space-x-2 text-muted-foreground">
+              <motion.div 
+                className="flex items-center space-x-2 text-muted-foreground"
+                variants={itemVariants}
+                whileHover={{ x: 5 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
                 <MapPin size={16} />
                 <span>{user.location}</span>
-              </div>
+              </motion.div>
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

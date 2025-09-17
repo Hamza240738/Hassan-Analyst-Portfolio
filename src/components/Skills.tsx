@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { GlowingEffect } from '@/components/ui/glowing-effect';
 import { cn } from '@/lib/utils';
 import { BarChart3, LineChart, Microscope, Briefcase, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface SkillsProps {
   technologies: string[];
@@ -65,21 +66,70 @@ const Skills = ({ technologies }: SkillsProps) => {
     );
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 60, rotateX: -15 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+        duration: 0.6
+      }
+    }
+  };
+
+  const badgeVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 150,
+        damping: 10
+      }
+    }
+  };
+
   return (
-    <section id="skills" className="py-24 px-6 lg:px-8">
+    <motion.section 
+      id="skills" 
+      className="py-24 px-6 lg:px-8"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-20">
+        <motion.div className="text-center mb-20" variants={cardVariants}>
           <h2 className="text-section text-foreground mb-6">
             Expertise & Skills
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Specialized in data analytics and business intelligence with a focus on transforming complex datasets into actionable insights
           </p>
-        </div>
+        </motion.div>
 
         {/* Core Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+          variants={containerVariants}
+        >
           {Object.entries(skillCategories).map(([categoryName, categoryData]) => {
             const categorySkills = technologies.filter(tech =>
               categoryData.skills.some(s => s.toLowerCase() === tech.toLowerCase())
@@ -88,8 +138,16 @@ const Skills = ({ technologies }: SkillsProps) => {
             if (categorySkills.length === 0) return null;
 
             return (
-              <div key={categoryName} className="min-h-[20rem]">
-                <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3">
+              <motion.div 
+                key={categoryName} 
+                className="min-h-[20rem]"
+                variants={cardVariants}
+                whileHover={{ 
+                  y: -8,
+                  transition: { type: "spring", stiffness: 300, damping: 20 }
+                }}
+              >
+                <div className="relative h-full rounded-[1.25rem] border-[0.75px] border-border p-2 md:rounded-[1.5rem] md:p-3 transition-all duration-300 hover:border-primary/30">
                   <GlowingEffect
                     spread={40}
                     glow={true}
@@ -98,47 +156,79 @@ const Skills = ({ technologies }: SkillsProps) => {
                     inactiveZone={0.01}
                     borderWidth={3}
                   />
-                  <div className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]">
+                  <motion.div 
+                    className="relative flex h-full flex-col justify-between gap-6 overflow-hidden rounded-xl border-[0.75px] bg-background p-6 shadow-sm dark:shadow-[0px_0px_27px_0px_rgba(45,45,45,0.3)]"
+                    whileHover={{ backgroundColor: "hsl(var(--glass))" }}
+                    transition={{ duration: 0.3 }}
+                  >
                     <div className="relative flex flex-1 flex-col gap-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-fit rounded-lg border-[0.75px] border-border p-2">
+                      <motion.div 
+                        className="flex items-center gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.2 }}
+                      >
+                        <motion.div 
+                          className="w-fit rounded-lg border-[0.75px] border-border p-2"
+                          whileHover={{ scale: 1.1, rotate: 5 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
                           <categoryData.icon className="h-5 w-5 text-foreground" />
-                        </div>
+                        </motion.div>
                         <h3 className="text-xl font-semibold font-sans tracking-[-0.04em] md:text-2xl text-foreground">
                           {categoryName}
                         </h3>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
+                      </motion.div>
+                      <motion.div 
+                        className="flex flex-wrap gap-2"
+                        variants={containerVariants}
+                      >
                         {categorySkills.map((skill, index) => (
-                          <Badge
+                          <motion.div
                             key={skill}
-                            variant="secondary"
-                            className="text-sm font-medium transition-all duration-200 hover:scale-105 cursor-default"
-                            style={{ animationDelay: `${index * 100}ms` }}
+                            variants={badgeVariants}
+                            whileHover={{ scale: 1.1, y: -2 }}
+                            transition={{ type: "spring", stiffness: 300 }}
                           >
-                            {skill}
-                          </Badge>
+                            <Badge
+                              variant="secondary"
+                              className="text-sm font-medium cursor-default"
+                            >
+                              {skill}
+                            </Badge>
+                          </motion.div>
                         ))}
-                      </div>
+                      </motion.div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Skills Overview */}
-        <div className="text-center">
-          <div className="inline-flex items-center gap-2 px-6 py-3 bg-muted/30 rounded-full">
-            <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+        <motion.div 
+          className="text-center"
+          variants={cardVariants}
+        >
+          <motion.div 
+            className="inline-flex items-center gap-2 px-6 py-3 bg-muted/30 rounded-full"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <motion.span 
+              className="w-2 h-2 bg-primary rounded-full"
+              animate={{ scale: [1, 1.5, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
             <span className="text-sm font-medium text-muted-foreground">
               {technologies.length} specialized skills across data science and analytics
             </span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
