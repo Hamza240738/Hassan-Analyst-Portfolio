@@ -1,5 +1,6 @@
 import { MapPin } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import profilePhoto from '@/assets/profile-photo.jpg';
 
 interface AboutProps {
   user: any;
@@ -47,7 +48,7 @@ const About = ({ user }: AboutProps) => {
             <div className="relative group">
               <div className="relative overflow-hidden rounded-2xl">
                 <img
-                  src={user.avatar_url}
+                  src={profilePhoto}
                   alt={user.name}
                   className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700"
                 />
